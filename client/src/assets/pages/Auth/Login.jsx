@@ -1,32 +1,35 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);
+    console.log('Sending login data:', { email, password });
 
     try {
-      // Send login request to backend
       const response = await axios.post('http://localhost:8000/login', { email, password });
+      console.log('Server response:', response);
 
-      // Check if login was successful
       if (!response.data.error) {
-        // Save token to localStorage
         localStorage.setItem('token', response.data.accessToken);
         localStorage.setItem('user', JSON.stringify(response.data.user));
 
-        // Navigate to home page
-        navigate('/home');
+        toast.success('Login successful!');
+
+        setTimeout(() => {
+          navigate('/home');
+        }, 2000); 
       }
     } catch (error) {
-      setError(error.response?.data?.message || 'Login failed');
+      console.error('Error during login:', error.response || error);
+      toast.error(error.response?.data?.message || 'Login failed');
     }
   };
 
@@ -40,13 +43,13 @@ const Login = () => {
         <div className="w-1/3 p-8 bg-white shadow-lg rounded-lg">
           <form onSubmit={handleSubmit} className="flex flex-col">
             <h4 className="text-2xl font-semibold mb-6 text-center">Login</h4>
-            {error && <p className="text-red-500 mb-4">{error}</p>}
             <input
-              type="text"
+              type="email"
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="p-3 mb-4 border rounded-lg focus:outline-none focus:border-cyan-500"
+              required
             />
             <input
               type="password"
@@ -54,6 +57,7 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="p-3 mb-6 border rounded-lg focus:outline-none focus:border-cyan-500"
+              required
             />
             <button type="submit" className="w-full py-3 mb-4 bg-cyan-500 text-white font-semibold rounded-lg hover:bg-cyan-600 transition">
               LOGIN
@@ -69,6 +73,8 @@ const Login = () => {
           </form>
         </div>
       </div>
+
+      <ToastContainer />
     </div>
   );
 };

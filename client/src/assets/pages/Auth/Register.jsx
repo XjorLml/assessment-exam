@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -8,9 +10,8 @@ const Register = () => {
     username: '',
     email: '',
     password: '',
-    confirmPassword: '', // Add confirmPassword field
+    confirmPassword: '',
   });
-  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,44 +20,45 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    // Basic validation
+
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(formData.email)) {
-      setError('Invalid email format');
+      toast.error('Invalid email format');
       return;
     }
-  
+
     if (formData.password.length < 8) {
-      setError('Password must be at least 8 characters');
+      toast.error('Password must be at least 8 characters');
       return;
     }
-  
+
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
+      toast.error('Passwords do not match');
       return;
     }
-  
+
     try {
-      // Send signup request to backend
       const response = await axios.post('http://localhost:8000/register', formData);
-      if (!response.data.error) {  // Check for 'error' key instead of 'success'
-        navigate('/login');
+
+      if (response.data && !response.data.error) {
+        toast.success('Registration successful! Please log in.');
+        setTimeout(() => {
+          navigate('/login');
+        }, 2000);
       } else {
-        setError(response.data.message || 'Signup failed');
+        toast.error(response.data.message || 'Signup failed');
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'An error occurred');
+      console.error('Error during registration:', err);
+      toast.error(err.response?.data?.message || 'An error occurred');
     }
   };
-  
 
   return (
     <div className="h-screen bg-cyan-50 flex items-center justify-center">
       <div className="w-1/3 p-8 bg-white shadow-lg rounded-lg">
         <h4 className="text-2xl font-semibold mb-6 text-center">Sign Up</h4>
-        {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
-        <form autoComplete="off" onSubmit={handleSubmit} className="flex flex-col">
+        <form onSubmit={handleSubmit} className="flex flex-col">
           <input
             type="text"
             name="username"
@@ -110,6 +112,17 @@ const Register = () => {
           </p>
         </form>
       </div>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000} 
+        hideProgressBar={false} 
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 };
