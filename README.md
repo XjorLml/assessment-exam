@@ -1,4 +1,4 @@
-# Project Title
+# Assesment Exam
 
 A full-stack web application built using the MERN stack (MongoDB, Express, React, Node), Vite as the frontend build tool, and Tailwind CSS for styling.
 
