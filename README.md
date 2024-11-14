@@ -47,7 +47,7 @@ JWT_EXPIRE=your_jwt_expire_time
 
 ```bash
 git clone https://github.com/XjorLml/Assesment-Exam.git
-cd Assesment Exam
+cd Assesment-Exam
 
 
 ```
