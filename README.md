@@ -37,8 +37,6 @@ Create a `.env` file in both `client` and `server` folders with the following va
 MONGO_URI=your_mongodb_uri
 JWT_SECRET=your_jwt_secret_key
 JWT_EXPIRE=your_jwt_expire_time
-
-
 ```
 
 ### 3. Installation and Setup
@@ -48,8 +46,6 @@ JWT_EXPIRE=your_jwt_expire_time
 ```bash
 git clone https://github.com/XjorLml/Assesment-Exam.git
 cd Assesment-Exam
-
-
 ```
 #### Install dependencies:
 #### For the backend:
@@ -57,16 +53,12 @@ cd Assesment-Exam
 ```bash
 cd server
 npm install
-
-
 ```
 #### For the backend:
 
 ```bash
 cd client
 npm install
-
-
 ```
 ### Set up environment variables:
 Create `.env` files in both `client` and `server` directories as specified in the [Environment Variables](#3-environment-variables) section.
@@ -78,8 +70,6 @@ Create `.env` files in both `client` and `server` directories as specified in th
 ```bash
 cd server
 npm run dev
-
-
 ```
 
 **Start the frontend:**
@@ -87,8 +77,6 @@ npm run dev
 ```bash
 cd client
 npm run dev
-
-
 ```
 ### 4. Scripts
 
@@ -117,8 +105,6 @@ Example:
 
 ```plaintext
 MONGO_URI=your_mongodb_atlas_connection_string
-
-
 ```
 ### 6. Features
 
