@@ -1,8 +1,0 @@
-# Node modules
-node_modules/
-
-# Other commonly ignored files
-npm-debug.log
-yarn-error.log
-.DS_Store
-.env
