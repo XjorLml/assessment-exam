@@ -35,8 +35,8 @@ Create a `.env` file in both `client` and `server` folders with the following va
 
 ```plaintext
 MONGO_URI=your_mongodb_uri
-JWT_SECRET=your_jwt_secret_key
-JWT_EXPIRE=your_jwt_expire_time
+JWT_SECRET=337b59834f4519baeb8c907ce75902d037d3a7408efbc4cf12d53d81532e4ff07770aaa993c5891fe72c404acfdb8c6ae5fc876a7f7bcea0699e275f6b91ee94
+JWT_EXPIRE=1h
 ```
 
 ### 3. Installation and Setup
